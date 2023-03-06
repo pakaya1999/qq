@@ -1,0 +1,344 @@
+find data type::*********
+
+<!DOCTYPE html>
+<html>
+<body>
+<?php 
+$x = 5985;
+var_dump($x);
+?> 
+</body>
+</html>
+
+switch case::************
+
+<?php
+$favcolor = "red";
+switch ($favcolor) {
+ case "red":
+ echo "Your favorite color is red!";
+ break;
+ case "blue":
+ echo "Your favorite color is blue!";
+ break;
+ case "green":
+ echo "Your favorite color is green!";
+ break;
+ default:
+ echo "Your favorite color is neither red, blue, nor 
+green!";
+}
+?>
+
+
+ if...else...elseif:::**********
+
+<?php
+$t = date("H");
+echo "<p>The hour (of the server) is " . $t; 
+echo ", and will give the following message:</p>";
+if ($t < "10") {
+ echo "Have a good morning!";
+} elseif ($t < "20") {
+ echo "Have a good day!";
+} else {
+ echo "Have a good night!";
+}
+?>
+
+
+do...while Loop:::************
+
+<?php
+$x = 0;
+do { 
+ echo $x."<br>";
+ $x+=2;
+} while ($x <= 50);
+?>
+
+for Loop:::
+
+<?php
+for ($i=0; $i < 50; $i+=2) { 
+echo $i."<br>";
+}
+?>
+
+foreach Loop:::**********
+
+<?php
+$colors = array("red", "green", "blue", "yellow");
+foreach ($colors as $value) {
+ echo "$value <br>";
+}
+?>
+
+
+Associative Arrays::**************
+
+<?php
+$age = array("Peter"=>"35", "Ben"=>"37", 
+"Joe"=>"43");
+foreach($age as $x => $x_value) {
+ echo "Key=" . $x . ", Value=" . $x_value;
+ echo "<br>";
+}
+?>
+
+ Multidimensional Arrays::********
+
+<?php
+$cars = array (
+ array("Volvo",22,18),
+ array("BMW",15,13),
+ array("Saab",5,2),
+ array("Land Rover",17,15)
+);
+ 
+for ($row = 0; $row < 4; $row++) {
+ echo "<p><b>Row number $row</b></p>";
+ echo "<ul>";
+ for ($col = 0; $col < 3; $col++) {
+ echo "<li>".$cars[$row][$col]."</li>";
+ }
+ echo "</ul>";
+}
+?>
+
+
+ Forms - Validate E-mail and URL:::**********
+
+<!DOCTYPE HTML> 
+<html>
+<head>
+<style>
+.error {color: #FF0000;}
+</style>
+</head>
+<body> 
+<?php
+// define variables and set to empty values
+$nameErr = $emailErr = $genderErr = $websiteErr = "";
+$name = $email = $gender = $comment = $website = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+ if (empty($_POST["name"])) {
+ $nameErr = "Name is required";
+ } else {
+ $name = test_input($_POST["name"]);
+ // check if name only contains letters and whitespace
+ if (!preg_match("/^[a-zA-Z-' ]*$/",$name)) {
+ $nameErr = "Only letters and white space allowed";
+ }
+ }
+ 
+ if (empty($_POST["email"])) {
+ $emailErr = "Email is required";
+ } else {
+ $email = test_input($_POST["email"]);
+ // check if e-mail address is well-formed
+ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+ $emailErr = "Invalid email format";
+ }
+ }
+ 
+ if (empty($_POST["website"])) {
+ $website = "";
+ } else {
+ $website = test_input($_POST["website"]);
+ // check if URL address syntax is valid
+ if 
+(!preg_match("/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-
+9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i",$website)) 
+{
+ $websiteErr = "Invalid URL";
+ } 
+ }
+
+ if (empty($_POST["comment"])) {
+ $comment = "";
+ } else {
+ $comment = test_input($_POST["comment"]);
+ }
+ if (empty($_POST["gender"])) {
+ $genderErr = "Gender is required";
+ } else {
+ $gender = test_input($_POST["gender"]);
+ }
+}
+function test_input($data) {
+ $data = trim($data);
+ $data = stripslashes($data);
+ $data = htmlspecialchars($data);
+ return $data;
+}
+?>
+<h2>PHP Form Validation Example</h2>
+<p><span class="error">* required field</span></p>
+<form method="post" action="<?php echo 
+htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
+ Name: <input type="text" name="name">
+ <span class="error">* <?php echo $nameErr;?></span>
+ <br><br>
+ E-mail: <input type="text" name="email">
+ <span class="error">* <?php echo $emailErr;?></span>
+ <br><br>
+ Website: <input type="text" name="website">
+ <span class="error"><?php echo $websiteErr;?></span>
+ <br><br>
+ Comment: <textarea name="comment" rows="5" 
+cols="40"></textarea>
+ <br><br>
+ Gender:
+ <input type="radio" name="gender" 
+value="female">Female
+ <input type="radio" name="gender" value="male">Male
+ <input type="radio" name="gender" 
+value="other">Other
+ <span class="error">* <?php echo $genderErr;?></span>
+ <br><br>
+ <input type="submit" name="submit" value="Submit"> 
+</form>
+
+<?php
+echo "<h2>Your Input:</h2>";
+echo $name;
+echo "<br>";
+echo $email;
+echo "<br>";
+echo $website;
+echo "<br>";
+echo $comment;
+echo "<br>";
+echo $gender;
+?>
+</body>
+</html>
+
+check pass or fail with js::***********
+
+<html>
+<head>
+<script>
+function test(){
+var marks;
+var pass_marks;
+marks = document.getElementById("marks").value;
+pass_marks = document.getElementById("pass_marks").value;
+if(marks > pass_marks){
+document.getElementById("output").innerHTML = 
+"Pass";
+}else {
+document.getElementById("output").innerHTML = 
+"Fail";
+}
+}
+</script>
+</head>
+<body>
+<p>Input Pass Marks: <input type="text" 
+id="pass_marks"></p>
+<p>Input Marks: <input type="text" id="marks"></p>
+<p id="output"></p>
+<p><input type="submit" value="Test" id="click" 
+onclick="test()"></p>
+</body>
+</html>
+
+
+***bottstrap******
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>bootstrap</title>
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+
+
+</head>
+<body>
+<!--container-->
+<br>
+<div class="container">
+	<div class="row">
+		<div class="col-4">
+			<table class="table table-info">
+				<thead class="table-dark">
+					<th>cource</th>
+					<th>age</th>
+					<th>cource</th>
+				</thead>
+				<tbody>
+					<td>jhon</td>
+					<td>22</td>
+					<td>ict</td>
+				</tbody>
+				<tr>
+					<tbody>
+					<td>ka</td>
+					<td>34</td>
+					<td>BST</td>
+				</tbody>
+				</tr>
+				<tr>
+					<tbody>
+					<td>joe</td>
+					<td>21</td>
+					<td>new</td>
+				</tbody>
+				</tr>
+			</table>
+		</div>
+
+
+
+
+		
+
+		<div class="col-4">
+			<p class="h3 text-center">
+				Lorem ipsum, in graphical and textual context, refers to filler text that is placed in a document or visual presentation. Lorem ipsum is derived from the Latin "dolorem ipsum" roughly translated as "pain itself
+			</p>
+		</div>
+
+		<div class="col-4">
+            <form action="bootstrap.php" class="form-control">
+
+<form action="/add" method="post"> @csrf
+<H1>Registration Form</H1>
+
+<input type="text" placeholder="Enter First Name" name="username1"><br><br>
+
+<label for="gender" style="font-size:20pt"> Select the Gender </label><br>
+<input type="radio" id="gender1" name="gender1" value="male">
+<label for="html">Male</label><br><br>
+
+<label for="course" style="font-size:20pt"> Choose Your Course </label><br>
+<input type="checkbox" id="course1" name="course1" value="programming">
+<label for="course1">Programming</label><br><br>
+
+<input type="submit" name="submit" value="Submit" style="background-color:blue">
+</form>
+</div>
+
+
+	</div>
+	
+	
+</div>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
